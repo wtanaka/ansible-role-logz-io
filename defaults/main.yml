@@ -13,3 +13,12 @@ logz_io_default_config:
 - conf_filename: mail-log
   input_file_name: /var/log/mail.log
   input_file_type: sendmail_log
+- conf_filename: syslog
+  input_file_name: /var/log/syslog
+  input_file_type: syslog
+- conf_filename: syslog
+  input_file_name: /var/log/syslog
+  input_file_type: syslog
+- conf_filename: auth-log
+  input_file_name: /var/log/auth.log
+  input_file_type: auth_log
