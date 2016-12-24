@@ -1,0 +1,19 @@
+#   -------------------------------------------------------
+#        File Logging Directives for Logz.io
+#   -------------------------------------------------------
+$ModLoad imfile
+$InputFilePollInterval 10
+$PrivDropToGroup adm
+$WorkDirectory /var/spool/rsyslog
+# File access file:
+$InputFileName {{item.input_file_name}}
+{# http://support.logz.io/support/solutions/articles/6000110550-which-log-types-are-preconfigured-on-the-logz-io-platform- #}
+$InputFileTag {{item.input_file_type}}:
+$InputFileStateFile stat-{{item.input_file_type}}
+$InputFileSeverity info
+$InputFilePersistStateInterval 20000
+$InputRunFileMonitor
+$template logzFormatFileTagName,"[{{logz_io_secret_key}}] <%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [type={{item.input_file_type}}] %msg%\n"
+if $programname == '{{item.input_file_type}}' then @@listener.logz.io:5000;logzFormatFileTagName
+if $programname == '{{item.input_file_type}}' then ~
+

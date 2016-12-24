@@ -1,0 +1,15 @@
+---
+# Set this per your
+# https://app.logz.io/#/dashboard/data-sources/rsyslog page
+# This looks something like WojImBeteuWraibutOshpeujdukpeoja
+logz_io_secret_key: "YOUR_SECRET_KEY_HERE"
+# Override this with more files specific to your site
+logz_io_site_config: []
+# Defaults
+logz_io_default_config:
+- conf_filename: mail-err
+  input_file_name: /var/log/mail.err
+  input_file_type: sendmail_err
+- conf_filename: mail-log
+  input_file_name: /var/log/mail.log
+  input_file_type: sendmail_log

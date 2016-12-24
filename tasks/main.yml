@@ -1,0 +1,42 @@
+---
+- include: compat.yml
+
+#- include: include_vars.yml
+
+#- include: epel.yml
+#  when: ansible_distribution == 'CentOS'
+
+#- include: Debian.yml
+#  when: ansible_os_family == 'Debian'
+
+#- include: RedHat.yml
+#  when: ansible_os_family == 'RedHat'
+
+#- include: update_package_names.yml
+
+#- include: install_package_names.yml
+
+# Confirmed file permissions on Debian 8 and Ubuntu 16
+- name: Create /etc/rsyslog.d directory
+  sudo: True
+  file:
+    path: /etc/rsyslog.d
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Install default configuration
+  sudo: True
+  with_items: "{{logz_io_default_config}}"
+  template: >
+    src=rsyslogd-conf.j2
+    dest=/etc/rsyslog.d/21-logzio-{{item.conf_filename}}.conf
+  notify: restart rsyslogd
+
+- name: Install site specific configuration
+  sudo: True
+  with_items: "{{logz_io_site_config}}"
+  template: >
+    src=rsyslogd-conf.j2
+    dest=/etc/rsyslog.d/21-logzio-{{item.conf_filename}}.conf
+  notify: restart rsyslogd

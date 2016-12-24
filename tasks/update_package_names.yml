@@ -1,0 +1,26 @@
+---
+- name: update {{item}} with default package manager
+  action: "{{backcompat_pkg_mgr}} name={{item}} state=latest"
+  sudo: yes
+  when: >
+    update_package_names is defined and
+    (backcompat_pkg_mgr == "yum" or backcompat_pkg_mgr == "apt")
+  with_items: update_package_names
+
+# Handle dnf case for Fedora
+- name: "check if {{update_package_names | join(' ')}} exists"
+  command: "rpm -q {{update_package_names | join(' ')}}"
+  changed_when: False
+  ignore_errors: True
+  register: package_exists_result
+  when: update_package_names is defined and backcompat_pkg_mgr == "dnf"
+
+# Use command since dnf was only added as a module in ansible 1.9.0
+- name: update {{update_package_names | join (' ')}} with dnf
+  command: dnf update -y {{update_package_names | join(' ')}}
+  sudo: yes
+  when: >
+    update_package_names is defined and backcompat_pkg_mgr == "dnf" and
+    package_exists_result
+  register: update_result
+  changed_when: "'Upgraded:' in update_result.stdout"
