@@ -1,21 +1,6 @@
 ---
 - include: compat.yml
 
-#- include: include_vars.yml
-
-#- include: epel.yml
-#  when: ansible_distribution == 'CentOS'
-
-#- include: Debian.yml
-#  when: ansible_os_family == 'Debian'
-
-#- include: RedHat.yml
-#  when: ansible_os_family == 'RedHat'
-
-#- include: update_package_names.yml
-
-#- include: install_package_names.yml
-
 # Confirmed file permissions on Debian 8 and Ubuntu 16
 - name: Create /etc/rsyslog.d directory
   sudo: True
