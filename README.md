@@ -1,17 +1,17 @@
 [![Build Status](https://travis-ci.org/wtanaka/ansible-role-logz-io.svg?branch=master)](https://travis-ci.org/wtanaka/ansible-role-logz-io)
 [![CircleCI](https://circleci.com/gh/wtanaka/ansible-role-logz-io.svg?style=svg)](https://circleci.com/gh/wtanaka/ansible-role-logz-io)
 
-wtanaka.logz-io
+wtanaka.logz_io
 ===============
 
-This ansible role installs log shipper configuration for logz-io
+This ansible role installs log shipper configuration for logz_io
 
 Example Playbook
 ----------------
 
     - hosts: all
       roles:
-         - role: wtanaka.logz-io
+         - role: wtanaka.logz_io
            # Get this from
            # https://app.logz.io/#/dashboard/data-sources/rsyslog
            logz_io_secret_key: WojImBeteuWraibutOshpeujdukpeoja
